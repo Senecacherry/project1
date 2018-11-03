@@ -1,5 +1,12 @@
 .pulse {
     
-    animation-iteration-count: 2;
+    animation-iteration-count: 1;
 }
 
+#inputsm {
+    width: 1000px;
+};
+
+#button {
+    float: left;
+}
