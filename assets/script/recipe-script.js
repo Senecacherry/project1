@@ -30,12 +30,12 @@ $(document).ready(function () {
             }
 
             for (var i = 0; i < cardNum.length; i++) {
-                $(cardNum[i] + " .card-header").text(recipes[i].title);
+                $(cardNum[i] + " #card-header").text(recipes[i].title);
                 $(cardNum[i] + " img").attr("src", recipes[i].image_url);
-                $(cardNum[i] + " .card-publisher").text("Published by " + recipes[i].publisher);
-                $(cardNum[i] + " .card-rating").text("Rating is " + parseInt(recipes[i].social_rank) + "%");
-                $(cardNum[i] + " .card-link").text(recipes[i].source_url);
-                $(cardNum[i] + " .card-link").attr("href", recipes[i].source_url);
+                $(cardNum[i] + " #card-publisher").text("Published by " + recipes[i].publisher);
+                $(cardNum[i] + " #card-rating").text("Rating is " + parseInt(recipes[i].social_rank) + "%");
+                $(cardNum[i] + " #card-link").text(recipes[i].source_url);
+                $(cardNum[i] + " #card-link").attr("href", recipes[i].source_url);
             }
         })
     }
