@@ -13,12 +13,19 @@ body {
 
 .cardOne {
 
-    padding-top: 15px;
+    padding-top: 55px;
 }
 .cardTwo {
 
-    padding-top: 15px;
+    padding-top: 60px;
 }
+
+/* .flag {
+    display: inline-block;
+    width: 16px;
+    height: 11px;
+    background: url(assets/css/flags.css) no-repeat;
+} */
 
 footer {
     
@@ -49,8 +56,9 @@ h3 {
     
     font-size: 30px;
     font-style: italic;
-    padding-top: 15px;
+    padding-top: 30px;
 }
+
 
 .inline {
 
@@ -64,14 +72,14 @@ h3 {
 }
 
 
-/* #mapid { 
+#mapid { 
     
     height: 180px; 
-} */
+}
 
 .pulse {
 
-    animation-iteration-count: 1;
+    animation-iteration-count: 2;
 }
 
 .search {
@@ -79,7 +87,7 @@ h3 {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size: 20px;
     margin:auto;
-    padding-top:20px;
+    padding-top:40px;
     text-align: center;
     width:50%;
        
