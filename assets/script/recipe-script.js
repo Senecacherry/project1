@@ -7,7 +7,7 @@ $(document).ready(function () {
     function runSearch(recipeSearch) {
         var recipeData = [];
         var recipes = [];
-        var cardNum = [".card-one", ".card-two", ".card-three"];
+        var cardNum = ["#card-one", "#card-two", "#card-three"];
 
         //API for food2fork.com
         var foodURLBase = "https://www.food2fork.com/api/search?key=70681d58b1a383e9f04015562d23961c&q=" + recipeSearch + "&sort=r";
