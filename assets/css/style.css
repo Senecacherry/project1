@@ -1,7 +1,6 @@
 body {
 
     background-image: linear-gradient(45deg, #93a5cf 0%, #e4efe9 100%);
-    background-position: center;
     background-size: cover;
 }
 
@@ -21,12 +20,13 @@ body {
     padding-top: 60px;
 }
 
-/* .flag {
-    display: inline-block;
-    width: 16px;
-    height: 11px;
-    background: url(assets/css/flags.css) no-repeat;
-} */
+
+#FF {
+    
+    color: #fa773a;
+    font-family: 'Black And White Picture', sans-serif;
+    font-size: 50px;
+}
 
 footer {
     
@@ -43,8 +43,14 @@ header {
 h1 {
 
     border-bottom: 2px solid black;
-    font-size: 60px;
+    font-size: 80px;
     padding-bottom: 5px;
+}
+
+#H2 {
+
+    color: #fd5e53;
+    font-family: 'Poor Story', cursive;
 }
 
 h2 {
