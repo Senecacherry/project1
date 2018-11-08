@@ -7,7 +7,8 @@
     <link rel="stylesheet" type="text/css" href="assets/css/animate.min.css">
     <!-- <link rel="stylesheet" type="text/css" href="assets/css/flags.css"> -->
     <link rel="stylesheet" type="Text/css" href="assets/css/style.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+        crossorigin="anonymous">
 
     <!-- Link to Bootstrap -->
     <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/united/bootstrap.min.css" rel="stylesheet"
@@ -17,7 +18,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <!-- Link to Javascript -->
-    <script type="text/javascript" src="assets/javascript/app.js"></script>
+    <script type="text/javascript" src="./assets/script/app.js"></script>
 
     <title>International Foodies</title>
 </head>
@@ -25,17 +26,15 @@
 <header>
     <h1 class="animated pulse">International Foodies</h1>
     <!-- <div class="flag"></div> -->
-    <h2> Feeling Hungry? &nbsp; <i class="fas fa-utensils"></i></h2> 
+    <h2> Feeling Hungry? &nbsp; <i class="fas fa-utensils"></i></h2>
     <h3> Choose a cuisine to find the best restaurants or recipes for your special days! </h3>
 </header>
 
 <body>
     <div class="search">
         <label for="search"> Search:</label>
-            <form class="inline">
-             <input type="text" class="form-control input-sm" id="inputsm">
-             <button type="button" class="btn btn-info" id="button">Submit</button>
-        </form>
+        <select id="cuisine-select" style="display: block">
+        </select>
     </div>
 
     <br>
@@ -44,14 +43,17 @@
 
         <div class="cardOne">
 
-                <h4>Restaurant Options:</h4>
+            <h4>Restaurant Options:</h4>
 
             <div class="row">
                 <div class="col-lg-4">
-                        <div class="card text-white bg-secondary mb-3" id="rest-card-one" style="max-width: 20rem;">
-                            <div class="card-header" id="#rest-card-header"></div>
-                            <div class="card-body" id="rest-card-body">
-                        <h5 class="card-title" id="rest-card-rating"></h5>
+                    <div class="card text-white bg-secondary mb-3" id="rest-card-one" style="max-width: 20rem;">
+                        <div class="card-header" id="#rest-card-header">
+                            <p id="card-name"></p>
+                        </div>
+
+                        <div class="card-body" id="rest-card-body">
+                            <h5 class="card-title" id="rest-card-rating"></h5>
                             <img style="width: 90%" />
                             <p class="card-text" id="rest-card-address"></p>
                             <p class="card-text" id="rest-card-cost"></p>
@@ -59,23 +61,27 @@
                     </div>
                 </div>
 
-            <div class="col-lg-4">
-                <div class="card text-white bg-secondary mb-3" id="rest-card-two" style="max-width: 20rem;">
-                    <div class="card-header" id="#rest-card-header"></div>
-                    <div class="card-body" id="rest-card-body">
-                        <h5 class="card-title" id="rest-card-rating"></h5>
-                        <img style="width: 90%" />
-                        <p class="card-text" id="rest-card-address"></p>
-                        <p class="card-text" id="rest-card-cost"></p>
+                <div class="col-lg-4">
+                    <div class="card text-white bg-secondary mb-3" id="rest-card-two" style="max-width: 20rem;">
+                        <div class="card-header" id="#rest-card-header">
+                            <p id="card-name"></p>
+                        </div>
+                        <div class="card-body" id="rest-card-body">
+                            <h5 class="card-title" id="rest-card-rating"></h5>
+                            <img style="width: 90%" />
+                            <p class="card-text" id="rest-card-address"></p>
+                            <p class="card-text" id="rest-card-cost"></p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="col-lg-4">
-                <div class="card text-white bg-secondary mb-3" id="rest-card-three" style="max-width: 20rem;">
-                    <div class="card-header" id="#rest-card-header"></div>
-                    <div class="card-body" id="rest-card-body">
-                        <h5 class="card-title" id="rest-card-rating"></h5>
+                <div class="col-lg-4">
+                    <div class="card text-white bg-secondary mb-3" id="rest-card-three" style="max-width: 20rem;">
+                        <div class="card-header" id="#rest-card-header">
+                            <p id="card-name"></p>
+                        </div>
+                        <div class="card-body" id="rest-card-body">
+                            <h5 class="card-title" id="rest-card-rating"></h5>
                             <img style="width: 90%" />
                             <p class="card-text" id="rest-card-address"></p>
                             <p class="card-text" id="rest-card-cost"></p>
@@ -84,54 +90,54 @@
                 </div>
             </div>
         </div>
-    <div class="cardTwo">
+        <div class="cardTwo">
 
-        <h4 class="option">Recipe Options:</h4>
+            <h4 class="option">Recipe Options:</h4>
 
-        <div class="row">
-            <div class="col-lg-4">
-                <div class="card text-white bg-secondary mb-3" id="card-one" style="max-width: 20rem;">
-                    <div class="card-header" id="card-header">Recipe</div>
-                    <div class="card-body">
-                        <img style="width: 90%" />
-                        <h5 class="card-title" wid="card-rating"></h5>
-                        <p class="card-text" id="card-publisher"></p>
-                        <a href="https://food2fork.com" id="card-link"></a>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="card text-white bg-secondary mb-3" id="card-one" style="max-width: 20rem;">
+                        <div class="card-header" id="card-header">Recipe</div>
+                        <div class="card-body">
+                            <img style="width: 90%" />
+                            <h5 class="card-title" id="card-rating"></h5>
+                            <p class="card-text" id="card-publisher"></p>
+                            <a href="https://food2fork.com" id="card-link"></a>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="col-lg-4">
-                <div class="card text-white bg-secondary mb-3" id="card-two" style="max-width: 20rem;">
-                    <div class="card-header" id="card-header">Recipe</div>
-                    <div class="card-body">
-                        <img style="width: 90%" />
-                        <h5 class="card-title" wid="card-rating"></h5>
-                        <p class="card-text" id="card-publisher"></p>
-                        <a href="https://food2fork.com" id="card-link"></a>
+                <div class="col-lg-4">
+                    <div class="card text-white bg-secondary mb-3" id="card-two" style="max-width: 20rem;">
+                        <div class="card-header" id="card-header">Recipe</div>
+                        <div class="card-body">
+                            <img style="width: 90%" />
+                            <h5 class="card-title" id="card-rating"></h5>
+                            <p class="card-text" id="card-publisher"></p>
+                            <a href="https://food2fork.com" id="card-link"></a>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="col-lg-4">
-                <div class="card text-white bg-secondary mb-3" id="card-three" style="max-width: 20rem;">
-                    <div class="card-header" id="card-header">Recipe</div>
-                    <div class="card-body">
-                        <img style="width: 90%" />
-                        <h5 class="card-title" wid="card-rating"></h5>
-                        <p class="card-text" id="card-publisher"></p>
-                        <a href="https://food2fork.com" id="card-link"></a>
+                <div class="col-lg-4">
+                    <div class="card text-white bg-secondary mb-3" id="card-three" style="max-width: 20rem;">
+                        <div class="card-header" id="card-header">Recipe</div>
+                        <div class="card-body">
+                            <img style="width: 90%" />
+                            <h5 class="card-title" id="card-rating"></h5>
+                            <p class="card-text" id="card-publisher"></p>
+                            <a href="https://food2fork.com" id="card-link"></a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
         <div id="mapid"></div>
 </body>
 <footer>
-       Copyright © 2018 International Foodies
-       Yelp.
-   </footer>
+    Copyright © 2018 International Foodies
+    Yelp.
+</footer>
 </body>
 
 </html>
