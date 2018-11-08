@@ -15,6 +15,7 @@ body {
 
     padding-top: 55px;
 }
+
 .cardTwo {
 
     padding-top: 60px;
@@ -33,7 +34,6 @@ footer {
     text-align: center;
 }
 
-
 header {
 
     padding-top: 20px;
@@ -42,14 +42,16 @@ header {
 
 h1 {
 
-    font-size:60px;
-    padding-bottom: 45px;
+    border-bottom: 2px solid black;
+    font-size: 60px;
+    padding-bottom: 5px;
 }
 
 h2 {
 
     font-size: 40px;
-    font-style: italic
+    font-style: italic;
+    padding-top: 15px;
 }
 
 h3 {
@@ -59,18 +61,16 @@ h3 {
     padding-top: 30px;
 }
 
-
-.inline {
-
-    display: flex;
-}
-
 #inputsm {
     
-    background-color:rgb(201, 193, 183);
+    background-color: rgb(201, 193, 183);
     border-color: 1px solid rgba(0,0,0,0.125);
 }
 
+label {
+
+    padding-bottom: 15px;
+}
 
 #mapid { 
     
@@ -86,10 +86,10 @@ h3 {
     
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size: 20px;
-    margin:auto;
-    padding-top:40px;
-    text-align: center;
-    width:50%;
+    margin: auto;
+    padding-top: 40px;
+    text-align: left;
+    width: 50%;
        
 }
 
