@@ -1,13 +1,14 @@
-
+$(document).ready(function () {
 
 //API for Zomato
+
+
 var restaurantURLBase = "https://developers.zomato.com/api/v2.1/";
 var userKey = "86ebc43c3d2c4d48e6b136ad3a9c2214"; //Jemmmy' key
 var cityID = "305"; // Boulder = 11184, Denver = 305, CO Springs = 529
 var cuisineIDs = [];
 var cuisineNames = [];
 
-$(document).ready(function () {
 
     initCuisines();
 
@@ -19,10 +20,11 @@ $(document).ready(function () {
         recipeSearch(cuisineName);
     });
 
-});
 
 // function to get an array of available cuisine names and a matching array of the cuisine ids
-function initCuisines() {
+
+
+    function initCuisines() {
     var restaurantURLCuisine = restaurantURLBase + "cuisines?city_id=" + cityID;
 
     $.ajax({
@@ -40,19 +42,19 @@ function initCuisines() {
         }
     });
 }
+//function to search for restaurants
 
-function restaurantSearch(cuisineID) {
+
+    function restaurantSearch(cuisineID) {
     var restaurantCard = ["#rest-card-one", "#rest-card-two", "#rest-card-three"];
     var restaurantURLSearch = restaurantURLBase + "search?entity_id=" + cityID + "&entity_type=city&count=10&radius=5&cuisines=" + cuisineID + "&sort=cost&order=asc";
-
-
-
 
     $.ajax({
         url: restaurantURLSearch,
         headers: { "user-key": userKey },
         method: "GET"
     }).then(function (response) {
+
 
         console.log(response.restaurants);
 
@@ -75,18 +77,18 @@ function restaurantSearch(cuisineID) {
             restName.push(response.restaurants[i].restaurant.name);
             restLink.push(response.restaurants[i].restaurant.url);
             console.log("coordinates", coordinates);
-            
-            
-            var marker = L.marker(coordinates).addTo(mymap).bindPopup("<a href=" + restLink + "</a>").openPopup();
+
+
+            var marker = L.marker(parseFloat([coordinates]),{icon: chefIcon}).addTo(mymap).bindPopup("<a href=" + restLink + ">" + restName + "</a>").openPopup();
             mymap.addLayer(marker);
-            
+
 
         }
     });
 
 }
 
-
+//API For Food2Fork
 
 // function recipeSearch(cuisineName) {
 
@@ -122,11 +124,7 @@ function restaurantSearch(cuisineID) {
 //     })
 // }
 
-
-
-
-
-
+//Leaflet.JS Map Data
 
     var mymap = L.map('mapid').setView([39.7392, -104.9903], 13);
     L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiaGVyYnN0cGgiLCJhIjoiY2pvNTN0Ym84MDV6ZzNwczFwb3k1MWx3NiJ9.UOgaM2aU2GE_fjRMDnQglw', {
@@ -136,33 +134,34 @@ function restaurantSearch(cuisineID) {
         accessToken: 'your.mapbox.access.token'
     }).addTo(mymap);
 
-    
+    var chefIcon = L.icon({
+        iconUrl: 'https://cdn2.iconfinder.com/data/icons/departments/100/icon_department-food-512.png',
+        //shadowUrl: 'leaf-shadow.png',
 
-    // var lollicup = L.marker([39.7470250000, -104.8515333333]).addTo(mymap);
-    // cherryCricket = L.marker([39.7194800000, -104.9567300000]).addTo(mymap);
-    // lucilesCreoleCafe = L.marker([39.7115277778, -104.9829472222]).addTo(mymap);
-    // jerusalemRestaurant = L.marker([39.6783333333, -104.9656833333]).addTo(mymap);
-    // jellyCafe = L.marker([39.7367800000, -104.9797100000]).addTo(mymap);
-    // crêpesNCrêpes = L.marker([39.7208361111, -104.9542472222]).addTo(mymap);
-    // littleManIceCream = L.marker([39.7595722222, -105.0111694444]).addTo(mymap);
-    // petesKitchen = L.marker([39.7399027778, -104.9635388889]).addTo(mymap);
-    // bigBills = L.marker([39.5668194444, -104.9241250000]).addTo(mymap);
-    // vineStreetPub = L.marker([39.7434166667, -104.9619916667]).addTo(mymap);
+        iconSize: [38, 80], // size of the icon
+        //shadowSize:   [50, 64], // size of the shadow
+        iconAnchor: [22, 80], // point of the icon which will correspond to marker's location
+        //shadowAnchor: [4, 62],  // the same for the shadow
+        popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+    });
 
+//var chefIcon = new chefIcon({iconURL: 'https://cdn2.iconfinder.com/data/icons/departments/100/icon_department-food-512.png’});
 
+// L.icon = function (options) {
+// return new L.Icon(options);
 
-    // lollicup.bindPopup("<a href= 'http://lollicupdenver.com'>Lollicup</a>").openPopup();
-    // cherryCricket.bindPopup("<a href= 'https://cherrycricket.com/'>Cherry Cricket</a>").openPopup();
-    // lucilesCreoleCafe.bindPopup("<a href= 'https://www.luciles.com/'>Lucile's Creole Cafe</a>").openPopup();
-    // jerusalemRestaurant.bindPopup("<a href= 'http://www.jerusalemrestaurant.com/'>Jerusalem Restaurant</a>").openPopup();
-    // jellyCafe.bindPopup("<a href= 'http://www.eatmorejelly.com/'>Jelly Cafe</a>").openPopup();
-    // crêpesNCrêpes.bindPopup("<a href= 'http://crepesncrepes.net/'>Crêpes 'n Crêpes</a>").openPopup();
-    // littleManIceCream.bindPopup("<a href= 'http://www.littlemanicecream.com/>Little Man Ice Cream</a>").openPopup();
-    // petesKitchen.bindPopup("<a href= 'http://www.petesrestaurants.com/PetesKitchen.html'>Pete's Kitchen</a>").openPopup();
-    // bigBills.bindPopup("<a href= 'http://http://www.bigbillsnypizza.com/'>Big Bill's</a>").openPopup();
-    // vineStreetPub.bindPopup("<a href= 'http://www.mountainsunpub.com/locations.php'>Vine Street Pub</a>").openPopup();
+//var lollicup = L.marker([39.7470250000, -104.8515333333], {icon: chefIcon}).addTo(mymap);
+//      cherryCricket = L.marker([39.7194800000, -104.9567300000], {icon: chefIcon}).addTo(mymap);
+//      lucilesCreoleCafe = L.marker([39.7115277778, -104.9829472222], {icon: chefIcon}).addTo(mymap);
+//      jerusalemRestaurant = L.marker([39.6783333333, -104.9656833333], {icon: chefIcon}).addTo(mymap);
+//      jellyCafe = L.marker([39.7367800000, -104.9797100000], {icon: chefIcon}).addTo(mymap);
+//      crêpesNCrêpes = L.marker([39.7208361111, -104.9542472222], {icon: chefIcon}).addTo(mymap);
+//      littleManIceCream = L.marker([39.7595722222, -105.0111694444], {icon: chefIcon}).addTo(mymap);
+//      petesKitchen = L.marker([39.7399027778, -104.9635388889], {icon: chefIcon}).addTo(mymap);
+//      bigBills = L.marker([39.5668194444, -104.9241250000], {icon: chefIcon}).addTo(mymap);
+//      vineStreetPub = L.marker([39.7434166667, -104.9619916667], {icon: chefIcon}).addTo(mymap);
 
-var popup = L.popup();
+    var popup = L.popup();
 
     function onMapClick(e) {
         popup
@@ -173,3 +172,4 @@ var popup = L.popup();
 
     mymap.on('click', onMapClick);
 
+    });
