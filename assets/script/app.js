@@ -45,6 +45,9 @@ function restaurantSearch(cuisineID) {
     var restaurantCard = ["#rest-card-one", "#rest-card-two", "#rest-card-three"];
     var restaurantURLSearch = restaurantURLBase + "search?entity_id=" + cityID + "&entity_type=city&count=10&radius=5&cuisines=" + cuisineID + "&sort=cost&order=asc";
 
+
+
+
     $.ajax({
         url: restaurantURLSearch,
         headers: { "user-key": userKey },
@@ -53,6 +56,7 @@ function restaurantSearch(cuisineID) {
 
         console.log(response.restaurants);
 
+
         for (var i = 0; i < restaurantCard.length; i++) {
             $(restaurantCard[i] + " #card-name").text(response.restaurants[i].restaurant.name);
             $(restaurantCard[i] + " img").attr("src", response.restaurants[i].restaurant.thumb);
@@ -60,59 +64,79 @@ function restaurantSearch(cuisineID) {
             $(restaurantCard[i] + " #rest-card-address").text(response.restaurants[i].restaurant.location.address);
             $(restaurantCard[i] + " #rest-card-cost").text("Average Cost For Two: $" + response.restaurants[i].restaurant.average_cost_for_two);
 
+            //console.log(response.restaurants[i].restaurant.location.latitude);
+            //console.log(response.restaurants[i].restaurant.location.longitude);
+            console.log(response.restaurants[i].restaurant.name);
+            console.log(response.restaurants[i].restaurant.url);
+            var coordinates = [];
+            var restName = [];
+            var restLink = [];
+            coordinates.push(parseFloat(response.restaurants[i].restaurant.location.latitude), parseFloat(response.restaurants[i].restaurant.location.longitude));
+            restName.push(response.restaurants[i].restaurant.name);
+            restLink.push(response.restaurants[i].restaurant.url);
+            console.log("coordinates", coordinates);
+            
+            
+            var marker = L.marker(coordinates).addTo(mymap).bindPopup("<a href=" + restLink + "</a>").openPopup();
+            mymap.addLayer(marker);
+            
+
         }
     });
 
 }
 
 
-function recipeSearch(cuisineName) {
 
-    var recipeData = [];
-    var recipes = [];
-    var cardNum = ["#card-one", "#card-two", "#card-three"];
+// function recipeSearch(cuisineName) {
 
-    //API for food2fork.com
-    var foodURLBase = "https://www.food2fork.com/api/search?key=70681d58b1a383e9f04015562d23961c&q=" + cuisineName + "&sort=r";
+//     var recipeData = [];
+//     var recipes = [];
+//     var cardNum = ["#card-one", "#card-two", "#card-three"];
 
-    $.ajax({
-        url: foodURLBase,
-        method: "GET"
-    }).then(function (data) {
-        // console.log(data);
+//     //API for food2fork.com
+//     var foodURLBase = "https://www.food2fork.com/api/search?key=70681d58b1a383e9f04015562d23961c&q=" + cuisineName + "&sort=r";
 
-        recipeData.splice(0, 1, JSON.parse(data));
-        recipes = recipeData[0].recipes;
-        console.log(recipeData);
+//     $.ajax({
+//         url: foodURLBase,
+//         method: "GET"
+//     }).then(function (data) {
+//         // console.log(data);
 
-        if (recipes.length === 0) {
-            alert("There is no recipe for " + recipeSearch + "search.");
-            return;
-        }
-        for (var i = 0; i < cardNum.length; i++) {
-            $(cardNum[i] + " #card-header").text(recipes[i].title);
-            $(cardNum[i] + " img").attr("src", recipes[i].image_url);
-            $(cardNum[i] + " #card-publisher").text("Published by " + recipes[i].publisher);
-            $(cardNum[i] + " #card-rating").text("Rating is " + parseInt(recipes[i].social_rank) + "%");
-            $(cardNum[i] + " #card-link").text(recipes[i].source_url);
-            $(cardNum[i] + " #card-link").attr("href", recipes[i].source_url);
-        }
-    })
-}
+//         recipeData.splice(0, 1, JSON.parse(data));
+//         recipes = recipeData[0].recipes;
+//         console.log(recipeData);
 
-
-
+//         if (recipes.length === 0) {
+//             alert("There is no recipe for " + recipeSearch + "search.");
+//             return;
+//         }
+//         for (var i = 0; i < cardNum.length; i++) {
+//             $(cardNum[i] + " #card-header").text(recipes[i].title);
+//             $(cardNum[i] + " img").attr("src", recipes[i].image_url);
+//             $(cardNum[i] + " #card-publisher").text("Published by " + recipes[i].publisher);
+//             $(cardNum[i] + " #card-rating").text("Rating is " + parseInt(recipes[i].social_rank) + "%");
+//             $(cardNum[i] + " #card-link").text(recipes[i].source_url);
+//             $(cardNum[i] + " #card-link").attr("href", recipes[i].source_url);
+//         }
+//     })
+// }
 
 
 
 
-    // var mymap = L.map('mapid').setView([39.7392, -104.9903], 13);
-    // L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiaGVyYnN0cGgiLCJhIjoiY2pvNTN0Ym84MDV6ZzNwczFwb3k1MWx3NiJ9.UOgaM2aU2GE_fjRMDnQglw', {
-    //     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    //     maxZoom: 18,
-    //     id: 'mapbox.streets',
-    //     accessToken: 'your.mapbox.access.token'
-    // }).addTo(mymap);
+
+
+
+    var mymap = L.map('mapid').setView([39.7392, -104.9903], 13);
+    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiaGVyYnN0cGgiLCJhIjoiY2pvNTN0Ym84MDV6ZzNwczFwb3k1MWx3NiJ9.UOgaM2aU2GE_fjRMDnQglw', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 18,
+        id: 'mapbox.streets',
+        accessToken: 'your.mapbox.access.token'
+    }).addTo(mymap);
+
+    
 
     // var lollicup = L.marker([39.7470250000, -104.8515333333]).addTo(mymap);
     // cherryCricket = L.marker([39.7194800000, -104.9567300000]).addTo(mymap);
@@ -138,14 +162,14 @@ function recipeSearch(cuisineName) {
     // bigBills.bindPopup("<a href= 'http://http://www.bigbillsnypizza.com/'>Big Bill's</a>").openPopup();
     // vineStreetPub.bindPopup("<a href= 'http://www.mountainsunpub.com/locations.php'>Vine Street Pub</a>").openPopup();
 
-    // var popup = L.popup();
+var popup = L.popup();
 
-    // function onMapClick(e) {
-    //     popup
-    //         .setLatLng(e.latlng)
-    //         .setContent("You clicked the map at " + e.latlng.toString())
-    //         .openOn(mymap);
-    // }
+    function onMapClick(e) {
+        popup
+            .setLatLng(e.latlng)
+            .setContent("You clicked the map at " + e.latlng.toString())
+            .openOn(mymap);
+    }
 
-    // mymap.on('click', onMapClick);
+    mymap.on('click', onMapClick);
 
