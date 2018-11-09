@@ -6,12 +6,15 @@ var userKey = "86ebc43c3d2c4d48e6b136ad3a9c2214"; //Jemmmy' key
 var cityID = "305"; // Boulder = 11184, Denver = 305, CO Springs = 529
 var cuisineIDs = [];
 var cuisineNames = [];
+var markers = [];
+
 
 $(document).ready(function () {
 
     initCuisines();
 
     $("#cuisine-select").change(function () {
+        clearMarkers(markers);
         var selectedIndx = parseInt($(this).children("option:selected").val());
         var cuisineName = cuisineNames[selectedIndx];
         var cuisineID = cuisineIDs[selectedIndx];
@@ -45,6 +48,9 @@ function restaurantSearch(cuisineID) {
     var restaurantCard = ["#rest-card-one", "#rest-card-two", "#rest-card-three"];
     var restaurantURLSearch = restaurantURLBase + "search?entity_id=" + cityID + "&entity_type=city&count=10&radius=5&cuisines=" + cuisineID + "&sort=cost&order=asc";
 
+
+
+
     $.ajax({
         url: restaurantURLSearch,
         headers: { "user-key": userKey },
@@ -60,9 +66,31 @@ function restaurantSearch(cuisineID) {
             $(restaurantCard[i] + " #rest-card-address").text(response.restaurants[i].restaurant.location.address);
             $(restaurantCard[i] + " #rest-card-cost").text("Average Cost For Two: $" + response.restaurants[i].restaurant.average_cost_for_two);
 
+            //console.log(response.restaurants[i].restaurant.location.latitude);
+            //console.log(response.restaurants[i].restaurant.location.longitude);
+            console.log(response.restaurants[i].restaurant.name);
+            console.log(response.restaurants[i].restaurant.url);
+            var coordinates = [parseFloat(response.restaurants[i].restaurant.location.latitude), parseFloat(response.restaurants[i].restaurant.location.longitude)];
+            var restName = (response.restaurants[i].restaurant.name);
+            var restLink = (response.restaurants[i].restaurant.url);
+            console.log("coordinates", coordinates);
+
+
+            var marker = L.marker(coordinates, { icon: chefIcon }).addTo(mymap);
+            marker.bindPopup("<a href=" + restLink + " target='_blank'>" + restName + "</a>");
+            marker.openPopup();
+            mymap.addLayer(marker);
+
+            markers.push(marker);
         }
     });
 
+}
+
+function clearMarkers(markers) {
+    for (var i = 0; i < markers.length; i++) {
+        this.mymap.removeLayer(markers[i]);
+    }
 }
 
 
@@ -102,50 +130,33 @@ function recipeSearch(cuisineName) {
 
 
 
+var mymap = L.map('mapid').setView([39.7392, -104.9903], 13);
+L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiaGVyYnN0cGgiLCJhIjoiY2pvNTN0Ym84MDV6ZzNwczFwb3k1MWx3NiJ9.UOgaM2aU2GE_fjRMDnQglw', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    maxZoom: 10,
+    id: 'mapbox.streets',
+    accessToken: 'your.mapbox.access.token'
+}).addTo(mymap);
 
+var chefIcon = L.icon({
+    iconUrl: 'https://cdn2.iconfinder.com/data/icons/departments/100/icon_department-food-512.png',
+    //shadowUrl: 'leaf-shadow.png',
 
+    iconSize: [38, 80], // size of the icon
+    //shadowSize:   [50, 64], // size of the shadow
+    iconAnchor: [22, 80], // point of the icon which will correspond to marker's location
+    //shadowAnchor: [4, 62],  // the same for the shadow
+    popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+});
 
+// var popup = L.popup();
 
-    // var mymap = L.map('mapid').setView([39.7392, -104.9903], 13);
-    // L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiaGVyYnN0cGgiLCJhIjoiY2pvNTN0Ym84MDV6ZzNwczFwb3k1MWx3NiJ9.UOgaM2aU2GE_fjRMDnQglw', {
-    //     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    //     maxZoom: 18,
-    //     id: 'mapbox.streets',
-    //     accessToken: 'your.mapbox.access.token'
-    // }).addTo(mymap);
+// function onMapClick(e) {
+//     popup
+//         .setLatLng(e.latlng)
+//         .setContent("You clicked the map at " + e.latlng.toString())
+//         .openOn(mymap);
+// }
 
-    // var lollicup = L.marker([39.7470250000, -104.8515333333]).addTo(mymap);
-    // cherryCricket = L.marker([39.7194800000, -104.9567300000]).addTo(mymap);
-    // lucilesCreoleCafe = L.marker([39.7115277778, -104.9829472222]).addTo(mymap);
-    // jerusalemRestaurant = L.marker([39.6783333333, -104.9656833333]).addTo(mymap);
-    // jellyCafe = L.marker([39.7367800000, -104.9797100000]).addTo(mymap);
-    // crêpesNCrêpes = L.marker([39.7208361111, -104.9542472222]).addTo(mymap);
-    // littleManIceCream = L.marker([39.7595722222, -105.0111694444]).addTo(mymap);
-    // petesKitchen = L.marker([39.7399027778, -104.9635388889]).addTo(mymap);
-    // bigBills = L.marker([39.5668194444, -104.9241250000]).addTo(mymap);
-    // vineStreetPub = L.marker([39.7434166667, -104.9619916667]).addTo(mymap);
-
-
-
-    // lollicup.bindPopup("<a href= 'http://lollicupdenver.com'>Lollicup</a>").openPopup();
-    // cherryCricket.bindPopup("<a href= 'https://cherrycricket.com/'>Cherry Cricket</a>").openPopup();
-    // lucilesCreoleCafe.bindPopup("<a href= 'https://www.luciles.com/'>Lucile's Creole Cafe</a>").openPopup();
-    // jerusalemRestaurant.bindPopup("<a href= 'http://www.jerusalemrestaurant.com/'>Jerusalem Restaurant</a>").openPopup();
-    // jellyCafe.bindPopup("<a href= 'http://www.eatmorejelly.com/'>Jelly Cafe</a>").openPopup();
-    // crêpesNCrêpes.bindPopup("<a href= 'http://crepesncrepes.net/'>Crêpes 'n Crêpes</a>").openPopup();
-    // littleManIceCream.bindPopup("<a href= 'http://www.littlemanicecream.com/>Little Man Ice Cream</a>").openPopup();
-    // petesKitchen.bindPopup("<a href= 'http://www.petesrestaurants.com/PetesKitchen.html'>Pete's Kitchen</a>").openPopup();
-    // bigBills.bindPopup("<a href= 'http://http://www.bigbillsnypizza.com/'>Big Bill's</a>").openPopup();
-    // vineStreetPub.bindPopup("<a href= 'http://www.mountainsunpub.com/locations.php'>Vine Street Pub</a>").openPopup();
-
-    // var popup = L.popup();
-
-    // function onMapClick(e) {
-    //     popup
-    //         .setLatLng(e.latlng)
-    //         .setContent("You clicked the map at " + e.latlng.toString())
-    //         .openOn(mymap);
-    // }
-
-    // mymap.on('click', onMapClick);
+// mymap.on('click', onMapClick);
 
